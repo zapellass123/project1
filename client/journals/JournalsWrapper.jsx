@@ -32,7 +32,7 @@ export default class JournalsWrapper extends TrackerReact(React.Component) {
         // }
         return (
             <div>
-                <h1>Journals</h1>
+                <h1>Journals - {Session.get('test')}</h1>
                 <JournalsForm />
                 <ul className="journals">
                     {this.journals().map( (journal)=>{
