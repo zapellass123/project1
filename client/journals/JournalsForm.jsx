@@ -9,8 +9,9 @@ export default class JournalsForm extends Component {
         Meteor.call('addJournal', text, (error, data)=>{
             if(error) {
                 Bert.alert('Please login before submitting', 'danger', 'fixed-top', 'fa-frown-o');
-            }
-            this.refs.journal.value = "";
+            } else {
+                this.refs.journal.value = "";
+            }            
         });        
     }
 
