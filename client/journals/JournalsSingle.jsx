@@ -13,6 +13,7 @@ export default class JournalsSingle extends Component{
 
     render() {
         const journalClass = this.props.journal.complete ? "checked" : "";
+        const status = this.props.journal.complete ? <span className="completed">Completed</span> : '';
 
         return (
             <li className={journalClass}>
@@ -21,6 +22,7 @@ export default class JournalsSingle extends Component{
                     checked={this.props.journal.complete}
                     onClick={this.toggleChecked.bind(this)} />
                 {this.props.journal.text}
+                {status}
                 <button className="btn-cancel"
                     onClick={this.deleteJournal.bind(this)}>
                     &times;

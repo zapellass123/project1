@@ -211,7 +211,7 @@ input::-moz-placeholder
 input:-ms-input-placeholder
     color: #ddd
 
-.new-resolution
+.new-journal
     transition all 0.3s cubic-bezier(0.86, 0, 0.07, 1)
     shadow-level(3)
     &:hover
@@ -235,7 +235,7 @@ input:-ms-input-placeholder
         border none
         padding 30px
 
-.resolutions
+.journals
     list-style none
     padding 0
     margin 40px 0 
@@ -243,6 +243,7 @@ input:-ms-input-placeholder
     li
         font-size 2em 
         margin-bottom 8px 
+        trans()
         input
             margin-right 10px 
         &.checked
@@ -330,11 +331,11 @@ input:-ms-input-placeholder
         opacity 1 
         transform translate3d(0, 0,0)
 
-.resolutionLoad-enter
+.journalLoad-enter
     opacity: 0
     animation: slideIn 0.6s cubic-bezier(0.165, 0.84, 0.44, 1)
 
-.resolutionLoad-leave 
+.journalLoad-leave 
     animation: slideOut 0.4s cubic-bezier(0.165, 0.84, 0.44, 1)
     opacity: 1.0
 
