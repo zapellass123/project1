@@ -6,13 +6,9 @@ export default class JournalsForm extends Component {
         event.preventDefault();
         var text = this.refs.journal.value.trim();
 
-        Journals.insert({
-            text: text,
-            complete: false,
-            createAt: new Date()
-        });
-        
-        this.refs.journal.value = "";
+        Meteor.call('addJournal', text, ()=>{
+            this.refs.journal.value = "";
+        });        
     }
 
     render() {

@@ -7,7 +7,20 @@ import JournalsSingle from './JournalsSingle.jsx';
 Journals = new Mongo.Collection("journals");
 
 export default class JournalsWrapper extends TrackerReact(React.Component) {
-    
+    constructor(){
+        super();
+
+        this.state = {
+            subscription: {
+                journals: Meteor.subscribe("userJournals")
+            }
+        }
+    }
+
+    componentWillUnmount(){
+        this.state.subscription.journals.stop();
+    }
+
     journals() {
         return Journals.find().fetch();
     }
@@ -21,9 +34,9 @@ export default class JournalsWrapper extends TrackerReact(React.Component) {
             <div>
                 <h1>Journals</h1>
                 <JournalsForm />
-                <ul>
+                <ul className="journals">
                     {this.journals().map( (journal)=>{
-                        return <JournalsSingle journal={journal} />
+                        return <JournalsSingle key={journal._id} journal={journal} />
                     })}                    
                 </ul>
             </div>
