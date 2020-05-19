@@ -19,9 +19,11 @@ Meteor.methods({
         });
     },
     deleteJournal(journal) {
-        if(Meteor.userId() !== journal.user) {
-            throw new Meteor.Error('not-authorized');
-        }
-        Journals.remove(journal._id);
+        console.log(journal.user);
+        console.log(Meteor.userId());
+        // if(Meteor.userId() !== journal.user) {
+        //     throw new Meteor.Error('not-authorized');
+        // }
+        //Journals.remove(journal._id);
     }
 });

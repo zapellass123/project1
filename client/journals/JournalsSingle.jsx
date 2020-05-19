@@ -7,6 +7,7 @@ export default class JournalsSingle extends Component{
     }
 
     deleteJournal() { 
+        // console.log(this.props.journal._id);
         Meteor.call('deleteJournal', this.props.journal._id);
     }
 
