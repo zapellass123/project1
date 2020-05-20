@@ -1,5 +1,6 @@
 Meteor.methods({
     addJournal(journal){
+        check(journal, String);
         if(!Meteor.userId()) {
             throw new Meteor.Error('not-authorized');
         }
@@ -11,6 +12,8 @@ Meteor.methods({
         });
     },
     toggleJournal(journal) {
+        check(journal, Object);
+
         if(Meteor.userId() !== journal.user) {
             throw new Meteor.Error('not-authorized');
         }
@@ -19,10 +22,7 @@ Meteor.methods({
         });
     },
     deleteJournal(journal) {
-        // console.log(journal)
-        // console.log(journal.user);
-        // console.log(Meteor.userId());
-        // console.log(journal._id);
+        check(journal, Object);        
         if(Meteor.userId() !== journal.user) {
             throw new Meteor.Error('not-authorized');
         }

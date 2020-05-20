@@ -21,7 +21,7 @@ export default class JournalsSingle extends Component{
                     readOnly={true}
                     checked={this.props.journal.complete}
                     onClick={this.toggleChecked.bind(this)} />
-                {this.props.journal.text}
+                <a href={`/journals/${this.props.journal._id}`}>{this.props.journal.text}</a>
                 {status}
                 <button className="btn-cancel"
                     onClick={this.deleteJournal.bind(this)}>

@@ -1,5 +1,6 @@
 import React from 'react';
 import TrackerReact from 'meteor/ultimatejs:tracker-react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import JournalsForm from './JournalsForm.jsx';
 import JournalsSingle from './JournalsSingle.jsx';
@@ -31,15 +32,26 @@ export default class JournalsWrapper extends TrackerReact(React.Component) {
         //     return (<div>Loading</div>)
         // }
         return (
-            <div>
+            <ReactCSSTransitionGroup
+                component="div"
+                transitionName="route"
+                transitionEnterTimeout={600}
+                transitionAppearTimeout={600}
+                transitionLeaveTimeout={400}
+                transitionAppear={true}>  
                 <h1>Journals - {Session.get('test')}</h1>
                 <JournalsForm />
-                <ul className="journals">
+                <ReactCSSTransitionGroup
+                    component="ul"
+                    className="journals"
+                    transitionName="journalLoad"
+                    transitionEnterTimeout={600}
+                    transitionLeaveTimeout={400}>
                     {this.journals().map( (journal)=>{
                         return <JournalsSingle key={journal._id} journal={journal} />
-                    })}                    
-                </ul>
-            </div>
+                    })}
+                </ReactCSSTransitionGroup>
+            </ReactCSSTransitionGroup>
         )
     }
 }
