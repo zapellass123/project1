@@ -1,11 +1,13 @@
 Meteor.methods({
-    addJournal(journal){
+    addJournal(journal, desc){
         check(journal, String);
         if(!Meteor.userId()) {
             throw new Meteor.Error('not-authorized');
         }
         Journals.insert({
             text: journal,
+            // title: journal,
+            desc: desc,
             complete: false,
             createAt: new Date(),
             user: Meteor.userId()

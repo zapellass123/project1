@@ -2,10 +2,9 @@ import React from 'react';
 import TrackerReact from 'meteor/ultimatejs:tracker-react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
-import JournalsForm from './JournalsForm.jsx';
 import JournalsSingle from './JournalsSingle.jsx';
 
-Journals = new Mongo.Collection("journals");
+// Journals = new Mongo.Collection("journals");
 
 export default class JournalsWrapper extends TrackerReact(React.Component) {
     constructor(){
@@ -13,7 +12,7 @@ export default class JournalsWrapper extends TrackerReact(React.Component) {
 
         this.state = {
             subscription: {
-                journals: Meteor.subscribe("userJournals")
+                journals: Meteor.subscribe("allJournals")
             }
         }
     }
@@ -27,7 +26,7 @@ export default class JournalsWrapper extends TrackerReact(React.Component) {
     }
 
     render() {
-        let res = this.journals();
+        // let res = this.journals();
         // if(res.length < 1) {
         //     return (<div>Loading</div>)
         // }
@@ -39,9 +38,12 @@ export default class JournalsWrapper extends TrackerReact(React.Component) {
                 transitionAppearTimeout={600}
                 transitionLeaveTimeout={400}
                 transitionAppear={true}>  
-                <h1>Journals - {Session.get('test')}</h1>
-                <JournalsForm />
-                <ReactCSSTransitionGroup
+                {/* <h1>Add Journal
+                     - {Session.get('test')}
+                </h1>
+                <JournalsForm /> */}
+
+                {/* <ReactCSSTransitionGroup
                     component="ul"
                     className="journals"
                     transitionName="journalLoad"
@@ -50,8 +52,52 @@ export default class JournalsWrapper extends TrackerReact(React.Component) {
                     {this.journals().map( (journal)=>{
                         return <JournalsSingle key={journal._id} journal={journal} />
                     })}
-                </ReactCSSTransitionGroup>
-            </ReactCSSTransitionGroup>
+                </ReactCSSTransitionGroup> */}
+
+                {/* <div class="row"> */}
+                <ReactCSSTransitionGroup
+                    component="div"
+                    className="row"
+                    transitionName="journalLoad"
+                    transitionEnterTimeout={800}
+                    transitionLeaveTimeout={400}>
+                    {this.journals().map( (journal)=>{
+                        return <JournalsSingle key={journal._id} journal={journal} />
+                    })}
+                    {/* <div class="card">
+                        <h2>TITLE HEADING</h2>
+                        <h5>date</h5>
+                        <p>Some text..</p>
+                    </div> */}
+                </ReactCSSTransitionGroup>                
+                {/* <div class="card">
+                    <h2>TITLE HEADING</h2>
+                    <h5>date created</h5>
+                    <p>lorem ipsulm</p>
+                </div>
+                <div class="card">
+                    <h2>TITLE HEADING</h2>
+                    <h5>date</h5>
+                    <p>Some text..</p>
+                </div> */}
+                {/* <div class="rightcolumn">
+                <div class="card">
+                    <h2>About Me</h2>
+                    <p>Some text about me in culpa qui officia deserunt mollit anim..</p>
+                </div>
+                <div class="card">
+                    <h3>Popular Post</h3>
+                    <div class="fakeimg">Image</div><br />
+                    <div class="fakeimg">Image</div><br/>
+                    <div class="fakeimg">Image</div>
+                </div>
+                <div class="card">
+                    <h3>Follow Me</h3>
+                    <p>Some text..</p>
+                </div>
+                </div> */}
+                {/* </div> */}
+            </ReactCSSTransitionGroup>            
         )
     }
 }

@@ -17,8 +17,8 @@ export default class JournalDetail extends TrackerReact(Component){
         this.state.subscription.journals.stop();
     }
 
-    journals() {
-        return Journals.findOne({_id: this.props.id}).fetch();
+    journal() {
+        return Journals.findOne(this.props.id);
     }
 
     render() {
@@ -31,6 +31,7 @@ export default class JournalDetail extends TrackerReact(Component){
         return (
             <div>
                 <h1>{res.text}</h1>
+                <p>{res.desc}</p>
             </div>
         )
     }

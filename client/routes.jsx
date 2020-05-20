@@ -3,8 +3,9 @@ import {mount} from 'react-mounter';
 
 import {MainLayout} from './layouts/MainLayout.jsx';
 import JournalsWrapper from './journals/JournalsWrapper.jsx';
-import About from './About.jsx';
 import JournalDetail from './journals/JournalDetail.jsx';
+import JournalAdd from './journals/JournalAdd.jsx';
+import About from './About.jsx';
 
 FlowRouter.route('/', {
     action() {
@@ -18,6 +19,14 @@ FlowRouter.route('/about', {
     action() {
         mount(MainLayout, {
             content: (<About />)
+        })
+    }
+});
+
+FlowRouter.route('/add', {
+    action() {
+        mount(MainLayout, {
+            content: (<JournalAdd />)
         })
     }
 });

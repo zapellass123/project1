@@ -12,22 +12,23 @@ export default class JournalsSingle extends Component{
     }
 
     render() {
-        const journalClass = this.props.journal.complete ? "checked" : "";
+        // const journalClass = this.props.journal.complete ? "checked" : "";
         const status = this.props.journal.complete ? <span className="completed">Completed</span> : '';
 
         return (
-            <li className={journalClass}>
-                <input type="checkbox"
+            
+            <div className="card">
+                {/* <input type="checkbox"
                     readOnly={true}
                     checked={this.props.journal.complete}
-                    onClick={this.toggleChecked.bind(this)} />
-                <a href={`/journals/${this.props.journal._id}`}>{this.props.journal.text}</a>
-                {status}
+                    onClick={this.toggleChecked.bind(this)} /> */}
+                <h1><a href={`/journals/${this.props.journal._id}`} className="alink">{this.props.journal.text}</a></h1>
+                {/* {status} */}
                 <button className="btn-cancel"
                     onClick={this.deleteJournal.bind(this)}>
                     &times;
                 </button>
-            </li>
+            </div>
         )
     }
 }
