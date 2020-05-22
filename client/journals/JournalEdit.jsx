@@ -1,14 +1,15 @@
-import React from 'react';
+import React, {Component} from 'react';
 import TrackerReact from 'meteor/ultimatejs:tracker-react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
-import JournalsForm from './JournalsForm.jsx';
 
-Journals = new Mongo.Collection("journals");
+import JournalsFormEdit from './JournalsFormEdit.jsx';
 
-export default class JournalsWrapper extends TrackerReact(React.Component) {
-    constructor(){
-        super();
+
+
+export default class JournalEdit extends TrackerReact(Component){
+    constructor(props){
+        super(props);
 
         this.state = {
             subscription: {
@@ -21,15 +22,18 @@ export default class JournalsWrapper extends TrackerReact(React.Component) {
         this.state.subscription.journals.stop();
     }
 
-    journals() {
-        return Journals.find().fetch();
+    journal() {
+        return Journals.findOne(this.props.id);
     }
 
     render() {
-        // let res = this.journals();
-        // if(res.length < 1) {
-        //     return (<div>Loading</div>)
-        // }
+        console.log(this.props);
+        let res = this.journal();
+
+        if(!res){
+            return(<div>Loading...</div>);
+        }
+
         return (
             <ReactCSSTransitionGroup
                 component="div"
@@ -38,10 +42,8 @@ export default class JournalsWrapper extends TrackerReact(React.Component) {
                 transitionAppearTimeout={600}
                 transitionLeaveTimeout={400}
                 transitionAppear={true}>  
-                <h1>Add Journal
-                     {/* - {Session.get('test')} */}
-                </h1>
-                <JournalsForm />
+                <h1>Edit Journal</h1>
+                <JournalsFormEdit />
             </ReactCSSTransitionGroup>            
         )
     }

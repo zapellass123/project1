@@ -6,7 +6,6 @@ Meteor.methods({
         }
         Journals.insert({
             text: journal,
-            // title: journal,
             desc: desc,
             complete: false,
             createAt: new Date(),
@@ -29,5 +28,15 @@ Meteor.methods({
             throw new Meteor.Error('not-authorized');
         }
         Journals.remove(journal._id);
-    }
+    },
+    editJournal(journal, desc){
+        check(journal, String);
+        if(!Meteor.userId()) {
+            throw new Meteor.Error('not-authorized');
+        }
+        Journals.update({
+            text: journal,
+            desc: desc
+        });
+    },
 });

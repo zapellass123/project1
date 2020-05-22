@@ -5,6 +5,7 @@ import {MainLayout} from './layouts/MainLayout.jsx';
 import JournalsWrapper from './journals/JournalsWrapper.jsx';
 import JournalDetail from './journals/JournalDetail.jsx';
 import JournalAdd from './journals/JournalAdd.jsx';
+import JournalEdit from './journals/JournalEdit.jsx';
 import About from './About.jsx';
 
 FlowRouter.route('/', {
@@ -27,6 +28,14 @@ FlowRouter.route('/add', {
     action() {
         mount(MainLayout, {
             content: (<JournalAdd />)
+        })
+    }
+});
+
+FlowRouter.route('/edit/:id', {    
+    action(params) {
+        mount(MainLayout, {
+            Econtent: (<JournalEdit id={params.id}/>)
         })
     }
 });

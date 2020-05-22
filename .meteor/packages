@@ -29,3 +29,4 @@ accounts-password
 accounts-ui
 check
 bootstrap
+fortawesome:fontawesome@=4.7.0
