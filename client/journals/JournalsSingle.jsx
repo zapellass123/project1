@@ -12,16 +12,16 @@ export default class JournalsSingle extends Component{
 
     render() {
         const status = this.props.journal.complete ? <span className="completed">Completed</span> : '';
-
+        // console.log(this.props.journal._id);
         return (
             
-            <div className="card">
-                <h1><a href={`/journals/${this.props.journal._id}`} className="alink">{this.props.journal.text}</a></h1>
+            <div className="card">                
+                <h1><a href={`/journals/${this.props.journal._id}`} className="alink">{this.props.journal.text}</a></h1>                
                 <button className="btn-cancel"
                     onClick={this.deleteJournal.bind(this)}>
                     &times;
                 </button>
-                <a href={`/edit/${this.props.journal._id}`} className="alink">Edit</a>
+                <a href={`/edit/${this.props.journal._id}`} className="alink"><i className="fa fa-edit"></i></a>
             </div>
         )
     }

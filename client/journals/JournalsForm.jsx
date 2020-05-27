@@ -17,22 +17,31 @@ export default class JournalsForm extends Component {
                 // }            
             });
         }
+        FlowRouter.go('/');
     }
 
     render() {
         return(
             <form className="new-journal" onSubmit={this.addJournal.bind(this)}>
-                <input 
-                    name="title"
-                    type="text" 
-                    ref="journal"
-                    placeholder="Journal Title" />
-                <input 
-                    name="desc"
-                    type="text-area" 
-                    ref="desc"
-                    placeholder="Description" />
-                <button type="submit">Add</button>
+                <div className="field">
+                    <label>Title</label>
+                    <input 
+                        name="title"
+                        type="text" 
+                        ref="journal"
+                        placeholder="Journal Title" />
+                </div>
+                <div className="field">
+                    <label>Description</label>
+                    <textarea 
+                        name="desc"
+                        type="text-area" 
+                        ref="desc"
+                        placeholder="Description" />
+                </div>
+                <div className="field">
+                    <button type="submit">Add</button>
+                </div>                
             </form>
         )
     }

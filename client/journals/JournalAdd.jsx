@@ -4,7 +4,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import JournalsForm from './JournalsForm.jsx';
 
-Journals = new Mongo.Collection("journals");
+// Journals = new Mongo.Collection("journals");
 
 export default class JournalsWrapper extends TrackerReact(React.Component) {
     constructor(){

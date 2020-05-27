@@ -4,7 +4,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import JournalsSingle from './JournalsSingle.jsx';
 
-// Journals = new Mongo.Collection("journals");
+Journals = new Mongo.Collection("journals");
 
 export default class JournalsWrapper extends TrackerReact(React.Component) {
     constructor(){
@@ -12,7 +12,7 @@ export default class JournalsWrapper extends TrackerReact(React.Component) {
 
         this.state = {
             subscription: {
-                journals: Meteor.subscribe("allJournals")
+                journals: Meteor.subscribe("userJournals")
             }
         }
     }

@@ -35,7 +35,7 @@ FlowRouter.route('/add', {
 FlowRouter.route('/edit/:id', {    
     action(params) {
         mount(MainLayout, {
-            Econtent: (<JournalEdit id={params.id}/>)
+            content: (<JournalEdit id={params.id}/>)
         })
     }
 });
