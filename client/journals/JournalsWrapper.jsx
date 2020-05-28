@@ -24,6 +24,7 @@ export default class JournalsWrapper extends TrackerReact(React.Component) {
     journals() {
         return Journals.find().fetch();
     }
+    
 
     render() {
         return (
@@ -33,7 +34,7 @@ export default class JournalsWrapper extends TrackerReact(React.Component) {
                 transitionEnterTimeout={600}
                 transitionAppearTimeout={600}
                 transitionLeaveTimeout={400}
-                transitionAppear={true}>
+                transitionAppear={true}>                
                 <ReactCSSTransitionGroup
                     component="div"
                     className="row"
@@ -47,4 +48,4 @@ export default class JournalsWrapper extends TrackerReact(React.Component) {
             </ReactCSSTransitionGroup>            
         )
     }
-}
+};
