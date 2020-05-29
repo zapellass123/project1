@@ -8,7 +8,7 @@ export default class JournalsSingle extends Component{
         this.state = {
             isOpen: false,
             isEdit: false,
-            title: this.props.journal.text,
+            tex: this.props.journal.text,
             desc: this.props.journal.desc
         }
         this.openModal = this.openModal.bind(this);
@@ -41,6 +41,18 @@ export default class JournalsSingle extends Component{
     handleInputChange (evt) {
         this.setState({ [evt.target.name]: evt.target.value});
     }
+
+    // componentDidUpdate(prevProps, prevState) {
+    //     console.log(this.props);
+    //     if (!prevProps.journal && this.props.journal) {
+    //         const journal = this.props.journal;
+    //         console.log(journal);
+    //         this.setState({
+    //             title: journal.title,
+    //             desc: journal.desc
+    //         });
+    //     }
+    // }
 
     render() {
         // if(this.state.isEdit == true){
