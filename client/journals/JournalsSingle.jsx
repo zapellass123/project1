@@ -8,17 +8,41 @@ export default class JournalsSingle extends Component{
         this.state = {
             isOpen: false,
             isEdit: false,
-            tex: this.props.journal.text,
-            desc: this.props.journal.desc
+            text: this.props.journal.text,
+            desc: this.props.journal.desc,
+            // text: "",
+            // desc: ""
         }
-        this.openModal = this.openModal.bind(this);
+        this.openModalEdit = this.openModalEdit.bind(this);
+        this.openModalAdd = this.openModalAdd.bind(this);
+        this.openModalView = this.openModalView.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
     }
+    
 
-    openModal() {
+    openModalEdit() {
         this.setState({
             isOpen: true,
+            isEdit: true,
+            text: this.props.journal.text,
+            desc: this.props.journal.desc
+        });
+    }
+
+    openModalAdd() {
+        this.setState({
+            isOpen: true,
+            isEdit: false,
+            text: "",
+            desc: ""
+        });
+    }
+
+    openModalView() {
+        this.setState({
+            isOpen: true,
+            isEdit: false
         });
     }
 
@@ -42,99 +66,78 @@ export default class JournalsSingle extends Component{
         this.setState({ [evt.target.name]: evt.target.value});
     }
 
-    // componentDidUpdate(prevProps, prevState) {
-    //     console.log(this.props);
-    //     if (!prevProps.journal && this.props.journal) {
-    //         const journal = this.props.journal;
-    //         console.log(journal);
-    //         this.setState({
-    //             title: journal.title,
-    //             desc: journal.desc
-    //         });
-    //     }
-    // }
+    componentDidUpdate(prevProps, prevState) {
+        console.warn("Data has changed");
+        // console.log(this.props);
+        // if (!prevProps.journal && this.props.journal) {
+        //     const journal = this.props.journal;
+        //     console.log(journal);
+        //     this.setState({
+        //         text: journal.text,
+        //         desc: journal.desc
+        //     });
+        // }
+    }
+
+    editJournal(event){
+        event.preventDefault();
+        var text = this.refs.journal.value.trim();
+        var desc = this.refs.desc.value.trim();
+        Journals.update(this.props.journal._id, {$set: {text: text, desc: desc}});
+        console.log('Data Updated');
+        this.closeModal();
+        FlowRouter.go('/');        
+    } 
 
     render() {
-        // if(this.state.isEdit == true){
-            return(
-                <div className="card"> 
-                <Modal
-                    isOpen={ this.state.isOpen }
-                    close={ this.closeModal }
-                    title={ this.props.title}>
-                    <div>{ this.props.text}</div>                    
-                    <form className="new-journal">
-                        <div className="field">
-                            <label>Title</label>
-                            <input 
-                                name="title"
-                                type="text" 
-                                ref="journal"
-                                onChange={this.handleInputChange}
-                                value={this.state.title}
-                                placeholder="Journal Title" />
-                        </div>
-                        <div className="field">
-                            <label>Description</label>
-                            <textarea 
-                                name="desc"
-                                type="text-area" 
-                                ref="desc"
-                                onChange={this.handleInputChange}
-                                value={this.state.desc}
-                                placeholder="Description" />
-                        </div>          
-                    </form>
-                    <button onClick={ this.closeModal }>{ this.props.modalCancelButtonText ? this.props.modalCancelButtonText:"Close"}</button>
-                    <button>{this.props.journal ? 'Update':'Create'}</button>
-                </Modal>               
-                <h1><a href={`/journals/${this.props.journal._id}`} className="alink">{this.props.journal.text}</a></h1>                
-                <button className="btn-cancel"
-                    onClick={this.deleteJournal.bind(this)}>
-                    &times;
-                </button>
-                <a href={`/edit/${this.props.journal._id}`} className="alink"><i className="fa fa-edit"></i></a>
-                <button title={ this.props.openButtonTitleTag} className={ this.props.openButtonClassName} onClick={ this.openModal }>Edit</button>
-            </div>
-            )
-        // } else {
-        //     return (            
-        //         <div className="card"> 
-        //             <Modal
-        //                 isOpen={ this.state.isOpen }
-        //                 close={ this.closeModal }
-        //                 title={ this.props.title}>
-        //                 <div>{ this.props.text}</div>                    
-        //                 <form className="new-journal">
-        //                     <div className="field">
-        //                         <label>Title</label>
-        //                         <input 
-        //                             name="title"
-        //                             type="text" 
-        //                             ref="journal"
-        //                             placeholder="Journal Title" />
-        //                     </div>
-        //                     <div className="field">
-        //                         <label>Description</label>
-        //                         <textarea 
-        //                             name="desc"
-        //                             type="text-area" 
-        //                             ref="desc"
-        //                             placeholder="Description" />
-        //                     </div>          
-        //                 </form>
-        //                 <button onClick={ this.closeModal }>{ this.props.modalCancelButtonText ? this.props.modalCancelButtonText:"Close"}</button>
-        //                 {/* <button onClick={()=>{ this.props.onConfirmFunction(); this.closeModal() }}>{ this.props.modalConfirmButtonText ? this.props.modalConfirmButtonText:"Confirm"}</button> */}
-        //             </Modal>               
-        //             <h1><a href={`/journals/${this.props.journal._id}`} className="alink">{this.props.journal.text}</a></h1>                
-        //             <button className="btn-cancel"
-        //                 onClick={this.deleteJournal.bind(this)}>
-        //                 &times;
-        //             </button>
-        //             <a href={`/edit/${this.props.journal._id}`} className="alink"><i className="fa fa-edit"></i></a>
-        //             <button title={ this.props.openButtonTitleTag} className={ this.props.openButtonClassName} onClick={ this.openModal }>{ this.props.openButtonText ? this.props.openButtonText:"Confirm"}</button>
-        //         </div>
-        //     )
-        // }        
+        return(
+            <div className="card">
+            <Modal
+                word={ this.state.word }
+                isOpen={ this.state.isOpen }
+                close={ this.closeModal }
+            >                                      
+                <form className="new-journal" onSubmit={this.editJournal.bind(this)} style={{align:"center"}}>
+                    <div className="field">
+                        <label>Title</label>
+                        <input 
+                            name="text"
+                            type="text" 
+                            ref="journal"
+                            onChange={this.handleInputChange}
+                            // onChange={(e)=>this.handleInputChange(e)}
+                            value={this.state.text}
+                            placeholder="Journal Title" />
+                    </div>
+                    <div className="field">
+                        <label>Description</label>
+                        <textarea
+                            name="desc"
+                            type="text-area" 
+                            ref="desc"
+                            onChange={this.handleInputChange}
+                            // onChange={(e)=>this.handleInputChange(e)}
+                            value={this.state.desc} 
+                            placeholder="Description" />
+                    </div>          
+                    <div className="field">                        
+                        {this.state.isEdit && <button type="submit">Update</button>}
+                    </div>
+                </form>
+                <button onClick={ this.closeModal }>{ this.props.modalCancelButtonText ? this.props.modalCancelButtonText:"Close"}</button>
+            </Modal>
+            <h1><a href={`/journals/${this.props.journal._id}`} className="alink">{this.props.journal.text}</a></h1>                
+            <button 
+                className={ this.props.openButtonClassName}
+                onClick={this.deleteJournal.bind(this)} 
+                style={{backgroundColor:"red"}}
+                >
+                &times;
+            </button>
+            {/* <a href={`/edit/${this.props.journal._id}`} className="alink"><i className="fa fa-edit"></i></a> */}
+            <button title={ this.props.openButtonTitleTag} className={ this.props.openButtonClassName} onClick={ this.openModalEdit }>Edit</button>
+            <button title={ this.props.openButtonTitleTag} className={ this.props.openButtonClassName} onClick={ this.openModalView }>View</button>
+        </div>
+        )
     }
 }
