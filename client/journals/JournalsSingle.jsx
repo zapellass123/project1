@@ -10,8 +10,6 @@ export default class JournalsSingle extends Component{
             isEdit: false,
             text: this.props.journal.text,
             desc: this.props.journal.desc,
-            // text: "",
-            // desc: ""
         }
         this.openModalEdit = this.openModalEdit.bind(this);
         this.openModalAdd = this.openModalAdd.bind(this);
@@ -60,23 +58,12 @@ export default class JournalsSingle extends Component{
         Meteor.call('deleteJournal', this.props.journal);
     }
 
-    
-
     handleInputChange (evt) {
         this.setState({ [evt.target.name]: evt.target.value});
     }
 
     componentDidUpdate(prevProps, prevState) {
         console.warn("Data has changed");
-        // console.log(this.props);
-        // if (!prevProps.journal && this.props.journal) {
-        //     const journal = this.props.journal;
-        //     console.log(journal);
-        //     this.setState({
-        //         text: journal.text,
-        //         desc: journal.desc
-        //     });
-        // }
     }
 
     editJournal(event){
@@ -95,8 +82,7 @@ export default class JournalsSingle extends Component{
             <Modal
                 word={ this.state.word }
                 isOpen={ this.state.isOpen }
-                close={ this.closeModal }
-            >                                      
+                close={ this.closeModal }>                                      
                 <form className="new-journal" onSubmit={this.editJournal.bind(this)} style={{align:"center"}}>
                     <div className="field">
                         <label>Title</label>
@@ -105,7 +91,6 @@ export default class JournalsSingle extends Component{
                             type="text" 
                             ref="journal"
                             onChange={this.handleInputChange}
-                            // onChange={(e)=>this.handleInputChange(e)}
                             value={this.state.text}
                             placeholder="Journal Title" />
                     </div>
@@ -116,7 +101,6 @@ export default class JournalsSingle extends Component{
                             type="text-area" 
                             ref="desc"
                             onChange={this.handleInputChange}
-                            // onChange={(e)=>this.handleInputChange(e)}
                             value={this.state.desc} 
                             placeholder="Description" />
                     </div>          
