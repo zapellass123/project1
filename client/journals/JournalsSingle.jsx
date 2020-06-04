@@ -16,8 +16,8 @@ export default class JournalsSingle extends Component{
         this.openModalView = this.openModalView.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.selectEntry = this.selectEntry.bind(this);
     }
-    
 
     openModalEdit() {
         this.setState({
@@ -74,7 +74,16 @@ export default class JournalsSingle extends Component{
         console.log('Data Updated');
         this.closeModal();
         FlowRouter.go('/');        
-    } 
+    }
+
+    selectEntry() {
+        console.log('Button Clicked');
+        // console.log(this.props.journal.text);
+        const selectedEntry = {
+          title: this.props.journal.text,
+        };
+        this.props.selectFunction(selectedEntry);
+    }
 
     render() {
         return(
@@ -110,7 +119,10 @@ export default class JournalsSingle extends Component{
                 </form>
                 <button onClick={ this.closeModal }>{ this.props.modalCancelButtonText ? this.props.modalCancelButtonText:"Close"}</button>
             </Modal>
+
+
             <h1><a href={`/journals/${this.props.journal._id}`} className="alink">{this.props.journal.text}</a></h1>                
+            <input type="radio" name="journal-radio" id="journal-radio" onClick={()=>this.selectEntry()} /> &nbsp;
             <button 
                 className={ this.props.openButtonClassName}
                 onClick={this.deleteJournal.bind(this)} 

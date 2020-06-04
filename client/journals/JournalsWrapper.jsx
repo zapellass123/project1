@@ -13,8 +13,12 @@ export default class JournalsWrapper extends TrackerReact(React.Component) {
         this.state = {
             subscription: {
                 journals: Meteor.subscribe("userJournals")
-            }
-        }
+            },
+            selected: false,
+        };
+
+        this.displayJournalEntries = this.displayJournalEntries.bind(this);
+        this.selectEntry = this.selectEntry.bind(this);
     }
 
     componentWillUnmount(){
@@ -24,7 +28,33 @@ export default class JournalsWrapper extends TrackerReact(React.Component) {
     journals() {
         return Journals.find().fetch();
     }
+
+    selectEntry(entry) {
+        //Entry is an object with key title & desc
+        if (!!entry && entry.title) {
+          this.setState({
+            selected: entry
+          });
+        }
+      }
     
+    displayJournalEntries(){
+        // const entriesFromDB = Journals;
+        let elements = [];
+        Journals.find().forEach((journal)=>{
+            elements.push(
+                <JournalsSingle 
+                    key={journal._id}
+                    journal={journal}
+                    title={journal.title}
+                    desc={journal.desc}
+                    selectFunction={this.selectEntry}
+                    />
+            )
+        });
+
+        return elements;
+    }
 
     render() {
         return (
@@ -34,8 +64,12 @@ export default class JournalsWrapper extends TrackerReact(React.Component) {
                 transitionEnterTimeout={600}
                 transitionAppearTimeout={600}
                 transitionLeaveTimeout={400}
-                transitionAppear={true}>                
-                <ReactCSSTransitionGroup
+                transitionAppear={true}>
+                <div className="journal-selected">
+                    Selected journal :&nbsp;
+                    {this.state.selected ? ( this.state.selected.title ) : (" No selected journal")}
+                </div>                
+                {/* <ReactCSSTransitionGroup
                     component="div"
                     className="row"
                     transitionName="journalLoad"
@@ -44,7 +78,8 @@ export default class JournalsWrapper extends TrackerReact(React.Component) {
                     {this.journals().map( (journal)=>{
                         return <JournalsSingle key={journal._id} journal={journal} />
                     })}
-                </ReactCSSTransitionGroup>                
+                </ReactCSSTransitionGroup>                 */}
+                {this.displayJournalEntries()}
             </ReactCSSTransitionGroup>            
         )
     }
