@@ -1,19 +1,20 @@
-import React from 'react';
-import TrackerReact from 'meteor/ultimatejs:tracker-react';
+import React, { Component } from 'react';
+// import TrackerReact from 'meteor/ultimatejs:tracker-react';
+import { withTracker } from 'meteor/react-meteor-data';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import JournalsSingle from './JournalsSingle.jsx';
 
 Journals = new Mongo.Collection("journals");
 
-export default class JournalsWrapper extends TrackerReact(React.Component) {
+class JournalsWrapper extends Component {
     constructor(){
         super();
 
         this.state = {
-            subscription: {
-                journals: Meteor.subscribe("userJournals")
-            },
+            // subscription: {
+            //     journals: Meteor.subscribe("userJournals")
+            // },
             selected: false,
         };
 
@@ -21,13 +22,13 @@ export default class JournalsWrapper extends TrackerReact(React.Component) {
         this.selectEntry = this.selectEntry.bind(this);
     }
 
-    componentWillUnmount(){
-        this.state.subscription.journals.stop();
-    }
+    // componentWillUnmount(){
+    //     this.state.sub.journals.stop();
+    // }
 
-    journals() {
-        return Journals.find().fetch();
-    }
+    // journals() {
+    //     return Journals.find().fetch();
+    // }
 
     selectEntry(entry) {
         //Entry is an object with key title & desc
@@ -65,10 +66,14 @@ export default class JournalsWrapper extends TrackerReact(React.Component) {
                 transitionAppearTimeout={600}
                 transitionLeaveTimeout={400}
                 transitionAppear={true}>
-                <div className="journal-selected">
+
+                {/* <div className="journal-selected">
                     Selected journal :&nbsp;
                     {this.state.selected ? ( this.state.selected.title ) : (" No selected journal")}
-                </div>                
+                </div>          */}
+                
+                <div className="padding-for-top"></div>
+
                 {/* <ReactCSSTransitionGroup
                     component="div"
                     className="row"
@@ -84,3 +89,14 @@ export default class JournalsWrapper extends TrackerReact(React.Component) {
         )
     }
 };
+
+export default withTracker(()=>{
+    const sub = Meteor.subscribe('userJournals');
+    const subReady = sub.ready();
+  
+    return {
+      journals: Journals.find().fetch(),
+      subReady,
+    }
+})(JournalsWrapper);
+  

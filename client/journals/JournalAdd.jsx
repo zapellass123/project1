@@ -1,29 +1,24 @@
-import React from 'react';
-import TrackerReact from 'meteor/ultimatejs:tracker-react';
+import React, {Component} from 'react';
+// import TrackerReact from 'meteor/ultimatejs:tracker-react';
+import { withTracker } from 'meteor/react-meteor-data';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import JournalsForm from './JournalsForm.jsx';
 
 // Journals = new Mongo.Collection("journals");
 
-export default class JournalsWrapper extends TrackerReact(React.Component) {
+class JournalAdd extends Component {
     constructor(){
         super();
-
-        this.state = {
-            subscription: {
-                journals: Meteor.subscribe("userJournals")
-            }
-        }
     }
 
-    componentWillUnmount(){
-        this.state.subscription.journals.stop();
-    }
+    // componentWillUnmount(){
+    //     this.state.sub.journals.stop();
+    // }
 
-    journals() {
-        return Journals.find().fetch();
-    }
+    // journals() {
+    //     return Journals.find().fetch();
+    // }
 
     render() {
         // let res = this.journals();
@@ -37,12 +32,20 @@ export default class JournalsWrapper extends TrackerReact(React.Component) {
                 transitionEnterTimeout={600}
                 transitionAppearTimeout={600}
                 transitionLeaveTimeout={400}
-                transitionAppear={true}>  
-                <h1>Add Journal
-                     {/* - {Session.get('test')} */}
-                </h1>
+                transitionAppear={true}>
+                <div className="padding-for-top"></div> 
+                <h1>Add Journal</h1>
                 <JournalsForm />
             </ReactCSSTransitionGroup>            
         )
     }
 }
+export default withTracker(()=>{
+    const sub = Meteor.subscribe('userJournals');
+    const subReady = sub.ready();
+  
+    return {
+      journals: Journals.find().fetch(),
+      subReady,
+    }
+})(JournalAdd);

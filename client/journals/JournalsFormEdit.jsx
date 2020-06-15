@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import TrackerReact from 'meteor/ultimatejs:tracker-react';
 
-export default class JournalsFormEdit extends TrackerReact(Component) {
+export default class JournalsFormEdit extends Component {
     
     editJournal(event){
         event.preventDefault();

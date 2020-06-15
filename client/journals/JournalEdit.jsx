@@ -1,25 +1,20 @@
 import React, {Component} from 'react';
-import TrackerReact from 'meteor/ultimatejs:tracker-react';
+// import TrackerReact from 'meteor/ultimatejs:tracker-react';
+import { withTracker } from 'meteor/react-meteor-data';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
-export default class JournalEdit extends TrackerReact(Component){
+class JournalEdit extends Component{
     constructor(props){
         super(props);
-
-        this.state = {
-            subscription: {
-                journals: Meteor.subscribe("userJournals")
-            }
-        }
     }
 
-    componentWillUnmount(){
-        this.state.subscription.journals.stop();
-    }
+    // componentWillUnmount(){
+    //     this.state.subscription.journals.stop();
+    // }
 
-    journal() {
-        return Journals.findOne(this.props.id);
-    }
+    // journal() {
+    //     return Journals.findOne(this.props.id);
+    // }
 
     editJournal(event){
         event.preventDefault();
@@ -74,3 +69,14 @@ export default class JournalEdit extends TrackerReact(Component){
         )
     }
 }
+
+export default withTracker(()=>{
+    const sub = Meteor.subscribe('userJournals');
+    const subReady = sub.ready();
+  
+    return {
+      journals: Journals.find().fetch(),
+      subReady,
+    }
+})(JournalEdit);
+  

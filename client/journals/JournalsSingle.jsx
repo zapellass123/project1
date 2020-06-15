@@ -122,7 +122,7 @@ export default class JournalsSingle extends Component{
 
 
             <h1><a href={`/journals/${this.props.journal._id}`} className="alink">{this.props.journal.text}</a></h1>                
-            <input type="radio" name="journal-radio" id="journal-radio" onClick={()=>this.selectEntry()} /> &nbsp;
+            {/* <input type="radio" name="journal-radio" id="journal-radio" onClick={()=>this.selectEntry()} /> &nbsp; */}
             <button 
                 className={ this.props.openButtonClassName}
                 onClick={this.deleteJournal.bind(this)} 

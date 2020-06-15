@@ -1,20 +1,15 @@
 import React, {Component} from 'react';
-import TrackerReact from 'meteor/ultimatejs:tracker-react';
+// import TrackerReact from 'meteor/ultimatejs:tracker-react';
+import { withTracker } from 'meteor/react-meteor-data';
 
-export default class JournalDetail extends TrackerReact(Component){
+class JournalDetail extends Component{
 
     constructor(){
         super();
-
-        this.state = {
-            subscription: {
-                journals: Meteor.subscribe("userJournals")
-            }
-        }
     }
 
     componentWillUnmount(){
-        this.state.subscription.journals.stop();
+        this.state.sub.journals.stop();
     }
 
     journal() {
@@ -29,10 +24,20 @@ export default class JournalDetail extends TrackerReact(Component){
         }
 
         return (
-            <div>
+            <div className="padding-for-top">
                 <h1>{res.text}</h1>
                 <p>{res.desc}</p>
             </div>
         )
     }
 }
+
+export default withTracker(()=>{
+    const sub = Meteor.subscribe('userJournals');
+    const subReady = sub.ready();
+  
+    return {
+      journals: Journals.find().fetch(),
+      subReady,
+    }
+})(JournalDetail);
