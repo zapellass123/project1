@@ -9,12 +9,8 @@ export default class JournalsForm extends Component {
         var desc = this.refs.desc.value.trim();
         if(text && desc){
             Meteor.call('addJournal', text, desc, (error, data)=>{
-                // if(error) {
-                //     Bert.alert('Please login before submitting', 'danger', 'fixed-top', 'fa-frown-o');
-                // } else {
-                    this.refs.journal.value = "";
-                    this.refs.desc.value = "";
-                // }            
+                this.refs.journal.value = "";
+                this.refs.desc.value = "";
             });
         }
         FlowRouter.go('/');

@@ -9,7 +9,7 @@ class JournalDetail extends Component{
     }
 
     componentWillUnmount(){
-        this.state.sub.journals.stop();
+        this.sub.journals.stop();
     }
 
     journal() {
