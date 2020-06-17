@@ -55,7 +55,15 @@ export default class JournalsSingle extends Component{
     }
 
     deleteJournal() { 
-        Meteor.call('deleteJournal', this.props.journal);
+        // console.log(this.props.journal);
+        Meteor.call('deleteJournal', this.props.journal, (err, res) => {
+            if (err) {
+                console.log("Error : " + err);
+            } else {
+                console.log("Data Deleted!");
+                return res;
+            }
+          });
     }
 
     handleInputChange (evt) {

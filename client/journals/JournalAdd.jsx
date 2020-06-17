@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
-import JournalsForm from './JournalsForm.jsx';
+import { data } from 'jquery';
 
 // Journals = new Mongo.Collection("journals");
 
@@ -27,23 +27,14 @@ class JournalAdd extends Component {
         event.preventDefault();
         // console.log(this.state.text);
         if(this.state.text && this.state.desc){
-            Meteor.call('addJournal', this.state.text, this.state.desc, (error, data)=>{
-                this.refs.journal.value = "";
-                this.refs.desc.value = "";
-            });
+            Meteor.call('addJournal', this.state.text, this.state.desc, (err, res) => {
+                if (err) {
+                    console.log("Error : " + err);
+                } else { 
+                    console.log(res);
+                }                
+              });
         }
-
-        // check(journal, String);
-        // if(!Meteor.userId()) {
-        //     throw new Meteor.Error('not-authorized');
-        // }
-        // Journals.insert({
-        //     text: journal,
-        //     desc: desc,
-        //     complete: false,
-        //     createAt: new Date(),
-        //     user: Meteor.userId()
-        // });
 
         FlowRouter.go('/');
     }
